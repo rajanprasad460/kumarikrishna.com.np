@@ -3,10 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NEPSE Floorsheet Dashboard</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+  <title>NEPSE Floorsheet</title>
   <style>
     body {
       margin: 0;
@@ -24,75 +21,33 @@
 
     main {
       padding: 20px;
-      max-width: 1400px;
+      max-width: 1200px;
       margin: auto;
     }
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-
-    .card {
-      background: white;
-      padding: 16px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-
-    .card h3 {
-      margin: 0 0 8px;
-      font-size: 14px;
-      color: #666;
-    }
-
-    .card p {
-      margin: 0;
-      font-size: 22px;
+    #summary {
+      margin: 16px 0;
       font-weight: bold;
     }
 
-    .charts {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-      gap: 20px;
-      margin-bottom: 24px;
-    }
-
-    .chart-box {
-      background: white;
-      padding: 16px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-
-    .controls {
-      margin-bottom: 16px;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    input, select, button {
+    #search {
       padding: 10px;
-      font-size: 14px;
+      width: 100%;
+      max-width: 350px;
+      margin-bottom: 16px;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
       background: white;
-      margin-bottom: 20px;
     }
 
     th, td {
       padding: 10px;
       border: 1px solid #ddd;
       text-align: left;
-      font-size: 13px;
+      font-size: 14px;
     }
 
     th {
@@ -104,93 +59,24 @@
       background: #f9f9f9;
     }
 
-    h2 {
-      margin-top: 30px;
-    }
-
-    .note {
-      background: #fff7d6;
-      border: 1px solid #f0d36a;
+    .error {
+      color: #b00020;
+      background: #ffecec;
       padding: 12px;
-      margin-bottom: 20px;
-      border-radius: 8px;
+      border: 1px solid #ffb3b3;
     }
   </style>
 </head>
-
 <body>
   <header>
-    <h1>NEPSE Floorsheet Dashboard</h1>
-    <p id="updated">Loading data...</p>
+    <h1>NEPSE Floorsheet</h1>
+    <p id="updated">Loading floorsheet...</p>
   </header>
 
   <main>
-    <div class="note">
-      Top gainers and losers require price/change data. Floorsheet alone can show turnover, volume, VWAP, top trades, and broker activity.
-    </div>
+    <div id="summary">Please wait...</div>
 
-    <section class="cards">
-      <div class="card">
-        <h3>Total Transactions</h3>
-        <p id="total-trades">-</p>
-      </div>
-      <div class="card">
-        <h3>Total Turnover</h3>
-        <p id="total-turnover">-</p>
-      </div>
-      <div class="card">
-        <h3>Total Quantity</h3>
-        <p id="total-quantity">-</p>
-      </div>
-      <div class="card">
-        <h3>Unique Stocks</h3>
-        <p id="unique-stocks">-</p>
-      </div>
-      <div class="card">
-        <h3>Average Trade</h3>
-        <p id="avg-trade">-</p>
-      </div>
-    </section>
-
-    <section class="charts">
-      <div class="chart-box">
-        <h3>Top Stocks by Turnover</h3>
-        <canvas id="turnoverChart"></canvas>
-      </div>
-
-      <div class="chart-box">
-        <h3>Top Stocks by Volume</h3>
-        <canvas id="volumeChart"></canvas>
-      </div>
-
-      <div class="chart-box">
-        <h3>Top Buyers by Turnover</h3>
-        <canvas id="buyerChart"></canvas>
-      </div>
-
-      <div class="chart-box">
-        <h3>Top Sellers by Turnover</h3>
-        <canvas id="sellerChart"></canvas>
-      </div>
-    </section>
-
-    <h2>Floorsheet</h2>
-
-    <div class="controls">
-      <input id="search" type="text" placeholder="Search symbol, broker, contract..." />
-
-      <label>
-        Rows per page:
-        <select id="rows-per-page">
-          <option value="10">10</option>
-          <option value="20">20</option>
-          <option value="100">100</option>
-          <option value="500">500</option>
-        </select>
-      </label>
-    </div>
-
-    <div id="summary">Loading...</div>
+    <input id="search" type="text" placeholder="Search symbol, buyer, seller..." />
 
     <table>
       <thead>
@@ -206,41 +92,21 @@
       </thead>
       <tbody id="floorsheet-body"></tbody>
     </table>
+	<div style="margin-top: 16px;">
+  <button onclick="prevPage()">Previous</button>
+  <button onclick="nextPage()">Next</button>
+</div>
 
-    <button onclick="prevPage()">Previous</button>
-    <button onclick="nextPage()">Next</button>
+<label>
+  Rows per page:
+  <select id="rows-per-page">
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="100">100</option>
+    <option value="500">500</option>
+  </select>
+</label>
 
-    <h2>Top Trades</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Contract No</th>
-          <th>Symbol</th>
-          <th>Buyer</th>
-          <th>Seller</th>
-          <th>Quantity</th>
-          <th>Rate</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody id="top-trades-body"></tbody>
-    </table>
-
-    <h2>Symbol Summary</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Symbol</th>
-          <th>Trades</th>
-          <th>Quantity</th>
-          <th>Turnover</th>
-          <th>VWAP</th>
-          <th>High Rate</th>
-          <th>Low Rate</th>
-        </tr>
-      </thead>
-      <tbody id="symbol-summary-body"></tbody>
-    </table>
   </main>
 
   <script src="./app.js"></script>
