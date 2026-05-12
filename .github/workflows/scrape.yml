@@ -3,7 +3,7 @@ name: Update NEPSE Floorsheet
 on:
   schedule:
     # Runs every day at 4:15 PM Nepal time (UTC+5:45)
-    - cron: "30 10 * * *"
+    - cron: "30 10 * * 1-5" # 4:15 PM NPT, Mon-Fri
   workflow_dispatch:
 
 permissions:

@@ -1,6 +1,6 @@
 Source code to maintain kumarikrishna.com.np 
 
-Here is a clean, complete `README.md` you can directly use:
+
 
 ````markdown
 # NEPSE Floorsheet Tracker
