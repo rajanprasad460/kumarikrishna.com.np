@@ -1,38 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kumari Krishna</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #6a11cb, #2575fc);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-        }
-        .container {
-            padding: 20px;
-        }
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEPSE Floorsheet</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+    }
+
+    header {
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: white;
+      padding: 24px;
+      text-align: center;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    #summary {
+      margin: 16px 0;
+      font-weight: bold;
+    }
+
+    #search {
+      padding: 10px;
+      width: 100%;
+      max-width: 350px;
+      margin-bottom: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background: #2575fc;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+
+    .error {
+      color: #b00020;
+      background: #ffecec;
+      padding: 12px;
+      border: 1px solid #ffb3b3;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to Page for Kumari Krishna</h1>
-        <p>This page is under construction. Coming soon.......</p>
-    </div>
+  <header>
+    <h1>NEPSE Floorsheet</h1>
+    <p id="updated">Loading floorsheet...</p>
+  </header>
+
+  <main>
+    <div id="summary">Please wait...</div>
+
+    <input id="search" type="text" placeholder="Search symbol, buyer, seller..." />
+
+    <table>
+      <thead>
+        <tr>
+          <th>Contract No</th>
+          <th>Symbol</th>
+          <th>Buyer</th>
+          <th>Seller</th>
+          <th>Quantity</th>
+          <th>Rate</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody id="floorsheet-body"></tbody>
+    </table>
+	<div style="margin-top: 16px;">
+  <button onclick="prevPage()">Previous</button>
+  <button onclick="nextPage()">Next</button>
+</div>
+
+<label>
+  Rows per page:
+  <select id="rows-per-page">
+    <option value="10">10</option>
+    <option value="20">20</option>
+    <option value="100">100</option>
+    <option value="500">500</option>
+  </select>
+</label>
+
+  </main>
+
+  <script src="./app.js"></script>
 </body>
 </html>
