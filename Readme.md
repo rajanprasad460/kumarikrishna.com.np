@@ -223,11 +223,5 @@ This project is for educational and informational use.
 
 ```
 
----
-
-If you want, next I can help you:
-- make it look like a professional dashboard (charts + UI)
-- or scale it to handle **very large floorsheet data efficiently** 🚀
-```
 
 
