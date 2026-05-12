@@ -2,7 +2,8 @@ name: Update NEPSE Floorsheet
 
 on:
   schedule:
-    - cron: "30 11 * * 0-5"
+    # Runs every day at 4:15 PM Nepal time (UTC+5:45)
+    - cron: "30 10 * * *"
   workflow_dispatch:
 
 permissions:
@@ -13,9 +14,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
@@ -30,5 +33,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add Data/
-          git commit -m "Update NEPSE floorsheet" || echo "No changes"
+          git commit -m "Update floorsheet data" || echo "No changes"
           git push
