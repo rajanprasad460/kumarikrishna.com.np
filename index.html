@@ -160,31 +160,36 @@
 
     <hr>
 
-    <section>
-      <h2>Broker / Company Analysis</h2>
+  <section>
+    <h2>Broker Based Analysis</h2>
 
-      <div class="controls">
-        <input id="broker-input" type="number" placeholder="Broker ID e.g. 58">
+    <div class="controls">
+      <input id="broker-input" type="number" placeholder="Broker ID e.g. 58">
 
-        <label>
-          Broker view:
-          <select id="broker-view-mode">
-            <option value="table">Table</option>
-            <option value="chart">Bar chart</option>
-            <option value="both">Both</option>
-          </select>
-        </label>
+      <label>
+        Broker view:
+        <select id="broker-view-mode">
+          <option value="table">Table</option>
+          <option value="chart">Bar chart</option>
+          <option value="both">Both</option>
+        </select>
+      </label>
 
-        <button onclick="loadBrokerDailyTop()">Show Broker Analysis</button>
-      </div>
+      <button onclick="loadBrokerDailyTop()">Show Broker Analysis</button>
+    </div>
+  </section>
 
-      <div class="controls">
-        <input id="company-input" type="text" placeholder="Company e.g. NABIL">
-        <button onclick="loadCompanyPeriodTop()">Show Company Analysis</button>
-      </div>
+	<hr>
+  <section>
+    <h2>Company Analysis</h2>
 
-      <div id="analysis-status"></div>
-    </section>
+    <div class="controls">
+      <input id="company-input" type="text" placeholder="Company e.g. NABIL">
+      <button onclick="loadCompanyPeriodTop()">Show Company Analysis</button>
+    </div>
+
+    <div id="analysis-status"></div>
+  </section>
 
     <section>
       <h3 id="broker-title"></h3>
@@ -226,9 +231,113 @@
         <tbody id="company-sellers-body"></tbody>
       </table>
     </section>
+	
+	
+	<hr>
+
+	<section>
+	  <h2>Broker 58 Company Flow</h2>
+
+	  <div class="controls">
+		<input id="flow-company-input" type="text" placeholder="Company e.g. NABIL">
+		<button onclick="loadBroker58CompanyFlow()">Show Flow</button>
+	  </div>
+
+	  <div id="flow-status"></div>
+
+	  <div style="height:360px; background:white; padding:12px; margin-bottom:20px;">
+		<canvas id="broker58-flow-chart"></canvas>
+	  </div>
+
+	  <h3 id="flow-title"></h3>
+
+	  <table>
+		<thead>
+<tr>
+  <th>Date</th>
+  <th>Buy Qty</th>
+  <th>Sell Qty</th>
+  <th>Net Qty</th>
+  <th>Cumulative Net Qty</th>
+  <th>Buy Amount</th>
+  <th>Sell Amount</th>
+  <th>Net Amount</th>
+  <th>Buy Avg Price</th>
+  <th>Sell Avg Price</th>
+  <th>Avg Price</th>
+  <th>Signal</th>
+</tr>
+		</thead>
+		<tbody id="broker58-flow-body"></tbody>
+	  </table>
+	</section>
+	
+	
+<hr>
+
+<section>
+  <h2>Broker 58 Top Accumulation / Distribution</h2>
+
+  <div class="controls">
+    <label>
+      Period:
+      <select id="accum-days">
+        <option value="7">Last 7 days</option>
+        <option value="15">Last 15 days</option>
+        <option value="30">Last 30 days</option>
+        <option value="60">Last 60 days</option>
+        <option value="9999">All available</option>
+      </select>
+    </label>
+
+    <button onclick="loadBroker58AccumulationDashboard()">Show</button>
+  </div>
+
+  <div id="accum-status"></div>
+
+  <h3>Top Accumulating Stocks</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th>Buy Qty</th>
+        <th>Sell Qty</th>
+        <th>Net Qty</th>
+        <th>Buy Amount</th>
+        <th>Sell Amount</th>
+        <th>Net Amount</th>
+        <th>Signal</th>
+      </tr>
+    </thead>
+    <tbody id="top-accum-body"></tbody>
+  </table>
+
+  <h3>Top Distributing Stocks</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th>Buy Qty</th>
+        <th>Sell Qty</th>
+        <th>Net Qty</th>
+        <th>Buy Amount</th>
+        <th>Sell Amount</th>
+        <th>Net Amount</th>
+        <th>Signal</th>
+      </tr>
+    </thead>
+    <tbody id="top-dist-body"></tbody>
+  </table>
+</section>	
+	
+	
+	
+	
+	
+	
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <script src="./app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="./app.js"></script>
 </body>
 </html>
