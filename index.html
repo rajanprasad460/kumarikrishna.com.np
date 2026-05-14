@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NEPSE Floorsheet</title>
+
   <style>
     body {
       margin: 0;
@@ -25,22 +26,41 @@
       margin: auto;
     }
 
-    #summary {
+    section {
+      margin-bottom: 36px;
+    }
+
+    #summary,
+    #analysis-status {
       margin: 16px 0;
       font-weight: bold;
     }
 
-    #search {
+    input, select, button {
       padding: 10px;
+      font-size: 14px;
+      margin: 4px;
+    }
+
+    #search {
       width: 100%;
       max-width: 350px;
       margin-bottom: 16px;
+    }
+
+    .controls {
+      margin: 16px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
       background: white;
+      margin-bottom: 16px;
     }
 
     th, td {
@@ -59,6 +79,10 @@
       background: #f9f9f9;
     }
 
+    hr {
+      margin: 36px 0;
+    }
+
     .error {
       color: #b00020;
       background: #ffecec;
@@ -67,6 +91,7 @@
     }
   </style>
 </head>
+
 <body>
   <header>
     <h1>NEPSE Floorsheet</h1>
@@ -74,39 +99,102 @@
   </header>
 
   <main>
-    <div id="summary">Please wait...</div>
+    <section>
+      <h2>Latest Floorsheet</h2>
 
-    <input id="search" type="text" placeholder="Search symbol, buyer, seller..." />
+      <div id="summary">Please wait...</div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Contract No</th>
-          <th>Symbol</th>
-          <th>Buyer</th>
-          <th>Seller</th>
-          <th>Quantity</th>
-          <th>Rate</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-      <tbody id="floorsheet-body"></tbody>
-    </table>
-	<div style="margin-top: 16px;">
-  <button onclick="prevPage()">Previous</button>
-  <button onclick="nextPage()">Next</button>
-</div>
+      <input id="search" type="text" placeholder="Search symbol, buyer, seller..." />
 
-<label>
-  Rows per page:
-  <select id="rows-per-page">
-    <option value="10">10</option>
-    <option value="20">20</option>
-    <option value="100">100</option>
-    <option value="500">500</option>
-  </select>
-</label>
+      <div class="controls">
+        <label>
+          Rows per page:
+          <select id="rows-per-page">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="100">100</option>
+            <option value="500">500</option>
+          </select>
+        </label>
+      </div>
 
+      <table>
+        <thead>
+          <tr>
+            <th>Contract No</th>
+            <th>Symbol</th>
+            <th>Buyer</th>
+            <th>Seller</th>
+			<th onclick="sortByQuantity()" style="cursor:pointer;">
+			  Quantity ⬍
+			</th>
+            <th>Rate</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody id="floorsheet-body"></tbody>
+      </table>
+
+
+
+      <div>
+        <button onclick="prevPage()">Previous</button>
+        <button onclick="nextPage()">Next</button>
+      </div>
+    </section>
+
+    <hr>
+
+    <section>
+      <h2>Broker / Company Analysis</h2>
+
+      <div class="controls">
+        <input id="broker-input" type="number" placeholder="Broker ID e.g. 58">
+        <button onclick="loadBrokerDailyTop()">Show Broker Analysis</button>
+
+        <input id="company-input" type="text" placeholder="Company e.g. NABIL">
+        <button onclick="loadCompanyPeriodTop()">Show Company Analysis</button>
+      </div>
+
+      <div id="analysis-status"></div>
+    </section>
+
+    <section>
+      <h3 id="broker-title"></h3>
+      <div id="broker-analysis"></div>
+    </section>
+
+    <section>
+      <h3 id="company-title"></h3>
+
+      <h4>Top Buyer Brokers</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Broker</th>
+            <th>Trades</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+            <th>Avg Rate</th>
+          </tr>
+        </thead>
+        <tbody id="company-buyers-body"></tbody>
+      </table>
+
+      <h4>Top Seller Brokers</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Broker</th>
+            <th>Trades</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+            <th>Avg Rate</th>
+          </tr>
+        </thead>
+        <tbody id="company-sellers-body"></tbody>
+      </table>
+    </section>
   </main>
 
   <script src="./app.js"></script>

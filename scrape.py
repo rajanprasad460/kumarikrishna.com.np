@@ -29,18 +29,12 @@ floorsheet = nepse.getFloorSheet()
 # floorsheet = nepse.getFloorSheet(Type='xlsx')
 
 #%%
+import gzip
+import json
 
-# import shutil
-# from pathlib import Path
+file_path = "Data/floorsheet/2026-05-12.json.gz"
 
-# BASE_DIR = Path(__file__).resolve().parent
-# today = market_data[1].get("businessDate")
+with gzip.open(file_path, "rt", encoding="utf-8") as f:
+    data = json.load(f)
 
-# today_file = BASE_DIR / "Data" / "floorsheet" / f"{today}.json.gz"
-# latest_file = BASE_DIR / "Data" / "latest.json.gz"
-
-# if today_file.exists():
-#     shutil.copyfile(today_file, latest_file)
-#     print(f"Created {latest_file}")
-# else:
-#     print(f"Could not find {today_file}")
+print(len(data))
