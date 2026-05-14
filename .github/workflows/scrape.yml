@@ -1,16 +1,15 @@
-name: Update NEPSE Floorsheet
+name: Update NEPSE Data
 
 on:
   schedule:
-    # Runs every day at 4:15 PM Nepal time (UTC+5:45)
-    - cron: "30 10 * * 1-5" # 4:15 PM NPT, Mon-Fri
+    - cron: "10 10 * * 1-5"   # 3:55 PM Nepal time, Monday-Friday
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  scrape:
+  run-all:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,15 +22,19 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
 
       - name: Run scraper
         run: python scrape.py
 
-      - name: Commit updated data
+      - name: Generate broker-company history
+        run: python Broker_company_History.py
+
+      - name: Commit & push data
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add Data/
-          git commit -m "Update floorsheet data" || echo "No changes"
+          git commit -m "Update NEPSE data" || echo "No changes"
           git push

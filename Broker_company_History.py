@@ -1,7 +1,6 @@
 import gzip
 import json
 from pathlib import Path
-from tqdm import tqdm
 import pandas as pd
 
 
@@ -315,9 +314,9 @@ def save_single_broker_daily_company(data, broker_id=58):
 def main():
     df = load_all()
 
-    # broker_daily_top_companies(df, top_n=5)
-    # company_period_top_brokers(df, top_n=5)
-    # make_index(df)
+    broker_daily_top_companies(df, top_n=5)
+    company_period_top_brokers(df, top_n=5)
+    make_index(df)
     
     broker_58_daily = build_single_broker_daily_company(df, broker_id=58)
     save_single_broker_daily_company(broker_58_daily, broker_id=58)
