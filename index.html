@@ -42,6 +42,10 @@
       margin: 4px;
     }
 
+    button {
+      cursor: pointer;
+    }
+
     #search {
       width: 100%;
       max-width: 350px;
@@ -54,6 +58,21 @@
       flex-wrap: wrap;
       gap: 8px;
       align-items: center;
+    }
+
+    .chart-wrap {
+      background: white;
+      border: 1px solid #ddd;
+      padding: 14px;
+      margin: 14px 0 24px;
+      height: 420px;
+    }
+
+    .broker-day {
+      background: white;
+      border: 1px solid #ddd;
+      padding: 14px;
+      margin-bottom: 18px;
     }
 
     table {
@@ -125,17 +144,13 @@
             <th>Symbol</th>
             <th>Buyer</th>
             <th>Seller</th>
-			<th onclick="sortByQuantity()" style="cursor:pointer;">
-			  Quantity ⬍
-			</th>
+            <th id="qty-header" onclick="sortByQuantity()" style="cursor:pointer;">Quantity</th>
             <th>Rate</th>
             <th>Amount</th>
           </tr>
         </thead>
         <tbody id="floorsheet-body"></tbody>
       </table>
-
-
 
       <div>
         <button onclick="prevPage()">Previous</button>
@@ -150,8 +165,20 @@
 
       <div class="controls">
         <input id="broker-input" type="number" placeholder="Broker ID e.g. 58">
-        <button onclick="loadBrokerDailyTop()">Show Broker Analysis</button>
 
+        <label>
+          Broker view:
+          <select id="broker-view-mode">
+            <option value="table">Table</option>
+            <option value="chart">Bar chart</option>
+            <option value="both">Both</option>
+          </select>
+        </label>
+
+        <button onclick="loadBrokerDailyTop()">Show Broker Analysis</button>
+      </div>
+
+      <div class="controls">
         <input id="company-input" type="text" placeholder="Company e.g. NABIL">
         <button onclick="loadCompanyPeriodTop()">Show Company Analysis</button>
       </div>
@@ -161,7 +188,11 @@
 
     <section>
       <h3 id="broker-title"></h3>
-      <div id="broker-analysis"></div>
+      <div id="broker-analysis" style="
+		  display:grid;
+		  grid-template-columns: repeat(3, 2fr);
+		  gap:16px;
+			"></div>
     </section>
 
     <section>
@@ -197,6 +228,7 @@
     </section>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>

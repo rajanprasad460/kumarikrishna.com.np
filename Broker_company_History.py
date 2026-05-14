@@ -222,6 +222,17 @@ def make_index(df):
     save_json(OUTPUT_DIR / "index.json", index)
 
 
+
+
+
+
+
+
+
+
+
+
+
 def main():
     df = load_all()
 
