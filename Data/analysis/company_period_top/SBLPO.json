@@ -1,1 +1,1 @@
-{"symbol":"SBLPO","top_buyers":[{"broker":17,"trades":1,"quantity":450000,"amount":97380000.0,"avg_rate":216.4}],"top_sellers":[{"broker":16,"trades":1,"quantity":450000,"amount":97380000.0,"avg_rate":216.4}]}
+{"symbol":"SBLPO","top_buyers":[{"broker":17,"trades":1,"quantity":450000,"amount":97380000.0,"avg_rate":216.4},{"broker":8,"trades":1,"quantity":244164,"amount":51274440.0,"avg_rate":210.0}],"top_sellers":[{"broker":16,"trades":1,"quantity":450000,"amount":97380000.0,"avg_rate":216.4},{"broker":58,"trades":1,"quantity":244164,"amount":51274440.0,"avg_rate":210.0}]}
